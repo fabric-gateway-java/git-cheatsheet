@@ -29,3 +29,8 @@
       Delete a branch(remotely)
       
           - git push origin :[branch_name]
+          
+ 6) How to see the diff of the untracked files?
+ 
+         git add -N <file_name>
+         git diff
