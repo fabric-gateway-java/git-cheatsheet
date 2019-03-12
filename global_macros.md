@@ -8,7 +8,7 @@ The purpose of writing global macros is use across the repositories and reduce t
 
 **gerrit-trigger-scm**
 
-  - This macro is used to get the GERRIT_REFSPEC on every freestyle verify job. Below are the required and option parameters to pass on to this macro. This macro is used to get the GERRIT_REFSPEC of the patchset on top of the parent commit of the patchset.
+  - This macro is used to get the GERRIT_REFSPEC on every freestyle verify job. Below are the required and optional parameters for this macro. This macro is used to get the GERRIT_REFSPEC of the patchset on top of the parent commit of the patchset.
   
      **Required Parameters:**
      
@@ -21,7 +21,7 @@ The purpose of writing global macros is use across the repositories and reduce t
      
  **gerrit-trigger-scm-merge**
  
-   - This macro is used to get the GERRIT_REFSPEC on every freestyle merge job. Below are the required and optional parameters to pass on to this macro. This macro used to get the latest commit from the repository instead of GERRIT_REFSPEC of the patchset.
+   - This macro is used to get the GERRIT_REFSPEC on every freestyle merge job. Below are the required and optional parameters for this macro. This macro is used to get the latest commit from the repository instead of GERRIT_REFSPEC of the patchset.
   
      **Required Parameters:**
      
@@ -32,8 +32,7 @@ The purpose of writing global macros is use across the repositories and reduce t
      GERRIT_BRANCH - Gerrit_branch is a jenkins environment variable contains the branch name to build against
      GERRIT_REFSPEC - RefSpec number ex: refs/changes/32/30032/1 (default: blank)
      
-     when manually building the job replace the GERRIT_REFSPEC parameter with the Gerrit patchset reference number of the patch         
-     you would like to test and GERRIT_BRANCH with the branch you would like perform tests on.
+     When manually building the job, replace the GERRIT_REFSPEC parameter with the Gerrit patchset reference number of the patch. You can specify the GERRIT_BRANCH to test specific changes
  
  ## Wrappers
  
@@ -70,7 +69,7 @@ The purpose of writing global macros is use across the repositories and reduce t
       
  **gerrit-trigger-patch-submitted**
  
-   - This trigger is to trigger the Jenkins jobs when a patchset is created.
+   - This macro will trigger the Jenkins jobs when a patchset is created.
    
       This macro triggers a jenkins job when a change-merged-event is triggered
       It won't trigger the job when a commit message is updated in the gerrit patchset.
@@ -92,7 +91,7 @@ The purpose of writing global macros is use across the repositories and reduce t
        
  **gerrit-trigger-patch-merged**
  
-   - This macro is to trigger the Jenkins jobs when a patchset is merged.
+   - This macro will trigger the Jenkins jobs when a patchset is merged.
        
        **Required Parameters:**
        
@@ -109,7 +108,7 @@ The purpose of writing global macros is use across the repositories and reduce t
        
  **gerrit-comment-trigger**
  
-   - This macro is to trigger builds based on the comment provided in the gerrit patchset. Meaning when you use this macro in a job configuration, this won't trigger a job until you post a comment in gerrit patchset to trigger a job. Also, this macro skips the gerrit vote for any build result.
+   - This macro is used to trigger builds based on the comment provided in the gerrit patchset. Meaning when you use this macro in a job configuration, this won't trigger a job until you post a comment in gerrit patchset to trigger a job. Also, this macro skips the gerrit vote for any build result.
    
          triggers:
            - gerrit-comment-trigger:
@@ -127,7 +126,7 @@ The purpose of writing global macros is use across the repositories and reduce t
 
 **gerrit-trigger-tag**
 
-  - This macro is to trigger the jenkins job when a tag is created in the gerrit repository.
+  - This macro will trigger the Jenkins jobs when a tag is created.
   
         triggers:
           - gerrit-trigger-tag:
@@ -153,7 +152,7 @@ The purpose of writing global macros is use across the repositories and reduce t
 
 **archive-artifacts**
  
-  - This macro is to publish the artifacts provided in the <artifacts> on the jenkins console.
+  - This macro is used to publish the artifacts provided in the <artifacts> on the jenkins console.
   
         publishers:
           - archive-artifacts:
@@ -177,7 +176,7 @@ The purpose of writing global macros is use across the repositories and reduce t
      
 **fabric-email-notification**
   
-  -  This macro is to publish the build notifications through email to the list of email-ids sp
+  -  This macro is used to publish the build notifications through email to the list of email-ids sp
   
          publishers:
            - fabric-email-notification:
