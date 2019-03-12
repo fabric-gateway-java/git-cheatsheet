@@ -1,5 +1,7 @@
 # Global Macros
 
+The purpose of writing global macros is use across the repository and reduce redundant code. These macros are easy to manage.
+
 ## SCM 
 
 **The scm module allows referencing multiple repositories in a Jenkins job**
