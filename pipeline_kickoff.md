@@ -1,8 +1,8 @@
 # Pipeline Verify Job
 
-This document explains how to create Jenkins pipeline verify and merge jobs with simple configuration changes. The steps showed in this document explains how to create a new pipeline verify or merge job.
+This document explains how to create Jenkins pipeline verify and merge jobs with simple configuration changes. The steps shown in this document explain how to create a new pipeline verify or merge job.
 
-Below pipeline verify job template is a starting point but we recommend creating your own to ensure that the jobs configured reflect the project’s needs.
+The below pipeline verify job template is a starting point but we recommend creating your own to ensure that the jobs configured reflect the project’s needs.
 
 ## Job Templates
 
