@@ -88,7 +88,7 @@
        
        **Required Parameters:**
        
-       name: Project Name ex: fabric
+       name: Project Name ex: fabric or $PROJECT environment variable
        
        branch: Provide the branch name. Provide blank value if you would like trigger jon on any branch.
        
@@ -101,7 +101,7 @@
        
  **gerrit-comment-trigger**
  
-   - This macro is to trigger builds based on the comment provided in the gerrit patchset. Meaning when you use this macro in a job configuration, this won't trigger a job until you post a comment in gerrit patchset to trigger a job.
+   - This macro is to trigger builds based on the comment provided in the gerrit patchset. Meaning when you use this macro in a job configuration, this won't trigger a job until you post a comment in gerrit patchset to trigger a job. Also, this macro skips the gerrit vote for any build result.
    
          triggers:
            - gerrit-comment-trigger:
@@ -110,9 +110,11 @@
                trigger-comment: 'Run UnitTest'
                
       **Required Parameters:**
-       
-      project: Provide project name from the job configuration.
+      
+      name: Project Name ex: fabric
+      
+      branch: Provide the branch name. Provide blank value if you would like trigger jon on any branch.
       
       trigger-comment: Provide the comment for which you would like to trigger the job.
-      
+
       
