@@ -1,6 +1,8 @@
 # Global Macros
 
-## SCM
+## SCM 
+
+**The scm module allows referencing multiple repositories in a Jenkins job**
 
 **gerrit-trigger-scm**
 
@@ -33,6 +35,8 @@
  
  ## Wrappers
  
+ **Wrappers can alter the way the build is run as well as the build output.**
+ 
  **build-timeout**
  
    - This wrapper is used to set the build timeout in freestyle jobs.
@@ -59,6 +63,8 @@
       ```
       
 ## Triggers
+
+**Triggers define what causes a Jenkins job to start building.**
       
  **gerrit-trigger-patch-submitted**
  
@@ -132,7 +138,9 @@
       
       branch: Provide the branch name. Provide blank value if you would like trigger jon on any branch.
       
-## Publishers:
+## Publishers: 
+
+**Publishers define actions that the Jenkins job should perform after the build is complete.**
 
 **log-artifacts**
 
@@ -160,7 +168,7 @@
            
 **test-logs**
 
-  - This macro is used to collects the artifacts `**/*.csv, **/*.log, **/*.xml` and archive on the jenkins Last Successful Artifacts section.
+  - This macro is used to collects the artifacts `**/*.csv, **/*.log, **/*.xml` and archive on the jenkins build artifacts section.
   
          publishers:
            - test-logs
@@ -181,6 +189,8 @@
       output_format: provide the log file type
  
  ## Builder
+ 
+ **Builders define actions that the Jenkins job should execute**
  
 **provide-maven-settings**
 
@@ -207,7 +217,7 @@
         builders:
           - 'golang-environment-{arch}'
           
-    Same applicable to any arch (s390x or ppc64le)
+    Same applicable to any arch (*s390x* or *ppc64le*)
  
 **output-environment**
 
