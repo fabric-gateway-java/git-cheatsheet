@@ -62,6 +62,8 @@ Below pipeline verify job template is a starting point but we recommend creating
 
 **Names:**             - fabric-samples-verify-x86_64
 
+**Comment Trigger:**   - Trigger the verify jobs by posting a comment phrase `reverify` and `reverify-x` or `reverify-z` etc.. based on the value you provided to `build_node`
+
 **Required parameters:**
 
     project: fabric-samples  - Project Name
@@ -110,3 +112,97 @@ The above template is a base for any pipeline verify jobs. Use the below configu
     job_type: 'verify'
     jenkins_file: Jenkinsfile
 ```
+
+After you prepare the new pipeline verify job configuration, it creates a new job name as `fabric-<project_name>-verify-<arch>` ex: `fabric-samples-verify-x86_64` follow this document https://github.com/hyperledger/ci-management/blob/master/Sandbox_Setup.md#to-test-a-job to test the newly created job and push to sandbox for testing. After your changes and testing is done, push this change to https://gerrit.hyperledger.org/r/#/admin/projects/ci-management repository add reviewers in the patchset and post the same in the #ci-pipeline RocketChat channel for quick response.
+
+Once your patch is verified and reviewed, the patch will get merged by CI maintainers and then further it updates in the Production Jenkins Configuration. https://jenkins.hyperledger.org/
+
+### Pipeline Merge Job
+
+Follow the same approach for the pipeline merge job. All you have to do is, copy the below code snippet in your project directory under jjb.
+
+**Template Names:**    - '{project}-merge-{arch}'
+
+**Names:**             - <project_name>-merge-x86_64
+
+**Merge Template**
+
+```
+- pipeline_merge: &pipeline_merge
+    name: pipeline-merge
+
+    project-type: pipeline
+    concurrent: true
+    pipeline-scm:
+      script-path: '{jenkins_file}'
+      scm:
+        - git:
+            credentials-id: 'hyperledger-jobbuilder'
+            url: '$GIT_BASE'
+            shallow-clone: true
+            refspec: +refs/heads/$GERRIT_BRANCH:refs/remotes/origin/$GERRIT_BRANCH'
+            wipe-workspace: true
+            clean:
+              before: true
+              after: true
+            branches:
+              - refs/heads/$GERRIT_BRANCH
+
+    parameters:
+      - project-parameter:
+          project: '{project}'
+      - gerrit-parameter:
+          branch: 'master'
+      - gerrit-refspec-parameter:
+          refspec: 'refs/heads/$GERRIT_BRANCH'
+
+    properties:
+      - fabric-pipeline-properties:
+          job-type: '{job_type}'
+          build-node: 'hyp-{build_node}'
+      - build-discarder:
+          days-to-keep: 10
+          artifact-days-to-keep: 7
+
+    triggers:
+      - gerrit-trigger-patch-merged:
+          name: '{project}'
+          branch: '{branch}'
+          trigger-comment1: 'remerge$'
+          trigger-comment2: 'remerge-{build_node}$'
+
+- job-template:
+    name: '{project}-merge-{arch}'
+    id: fab-pipeline-merge
+<<: *pipeline_merge
+```
+
+## Macros
+
+**gerrit-trigger-patch-merged**
+
+  - This macro triggers a jenkins job when a `change-merged-event` is triggered
+  - It won't trigger the job when a commit message is updated in the gerrit patchset.
+  - Triggers the jobs when a comment is posted in the gerrit patchset. Comments are specified in the job configuration.
+  - It triggers the job on a branch pattren specified in the job configuration.
+  
+ **Comment Trigger:**   - Trigger the verify jobs by posting a comment phrase `remerge` and `remerge-x` or `remerge-z` etc.. based on the value you provided to `build_node`
+
+**Merge Job configuration**
+
+```
+---
+- project:
+    name: fabric-<project_name>-merge-jobs
+    jobs:
+      - 'fab-pipeline-merge'
+
+    project: <project_name>
+    branch: ''
+    arch: 'x86_64'
+    build_node: 'x'
+    job_type: 'merge'
+    jenkins_file: Jenkinsfile
+```
+
+See an example here https://github.com/hyperledger/ci-management/blob/master/jjb/fabric-sdk-node/fabric-sdk-node-jobs.yaml
