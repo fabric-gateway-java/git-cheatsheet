@@ -117,4 +117,45 @@
       
       trigger-comment: Provide the comment for which you would like to trigger the job.
 
+**gerrit-trigger-tag**
+
+  - This macro is to trigger the jenkins job when a tag is created in the gerrit repository.
+  
+        triggers:
+          - gerrit-trigger-tag:
+              name: '{project}'
+              branch: 'master'
+              
+    **Required Parameters:**
+      
+      name: Project Name ex: fabric
+      
+      branch: Provide the branch name. Provide blank value if you would like trigger jon on any branch.
+      
+## Publishers:
+
+**archive-artifacts**
+ 
+  - This macro is to publish the artifacts provided in the <artifacts> on the jenkins console.
+  
+        publishers:
+          - archive-artifacts:
+              artifacts: '.tox/**/*.log'
+              
+    The above macro archives the `.log` files and display on the jenkins console.
+     
+**fabric-email-notification**
+  
+  -  This macro is to publish the build notifications through email to the list of email-ids sp
+  
+         publishers:
+           - fabric-email-notification:
+               email-ids: 'sambhavdutt@gmail.com, vijaypunugubati@gmail.com'
+               output_format: ''
+               developer-email: 'developers'
+               
+     **Required Parameters:**
+      
+      email-ids: Provide the email-ids list here to send the email notification to.
+      output_format: provide the log file type
       
