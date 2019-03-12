@@ -81,17 +81,29 @@ Below pipeline verify job template is a starting point but we recommend creating
 
 See this file for reference https://github.com/hyperledger/ci-management/blob/master/jenkins-config/global-vars-production.sh
     
-**Macros**
+## Macros
 
-gerrit-trigger-patch-submitted  - This macro triggers a jenkins job when a patchset created event is triggered. 
+**gerrit-trigger-patch-submitted**
+
+  - This macro triggers a jenkins job when a `patchset-created-event` is triggered
+  - It won't trigger the job when a commit message is updated in the gerrit patchset.
+  - Triggers the jobs when a comment is posted in the gerrit patchset. Comments are specified in the job configuration.
+  - It triggers the job on a branch pattren specified in the job configuration.
+
+**fabric-pipeline-properties** : This macro provides the below environment variables in each job type. These variables can be accessed by `env.<ParameterName>` in Jenkinsfile. ex: `env.JOB_TYPE`
+
+### How to create a new pipeline verify job:
+
+The above template is a base for any pipeline verify jobs. Use the below configuration in your project directory under jjb folder and modify the below parameters based on your project need. Please make sure the jenkins node label is available and name of the jenkins_file. NOTE: Don't modify the `fab-pipeline-verify` as it is a `id` specified to the pipeline verify job. This `id` will be used in across all the pipeline verify job with pre-configured jenkins job configuration.
+
 ```
 ---
 - project:
-    name: fabric-samples-verify-jobs
+    name: fabric-<project_name>-verify-jobs
     jobs:
       - 'fab-pipeline-verify'
 
-    project: fabric-samples
+    project: <project_name>
     branch: ''
     arch: 'x86_64'
     build_node: 'x'
