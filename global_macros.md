@@ -190,7 +190,7 @@ The purpose of writing global macros is use across the repositories and reduce t
       email-ids: Provide the email-ids list here to send the email notification to.
       output_format: provide the log file type
  
- ## Builder
+ ## Builders
  
  **Builders define actions that the Jenkins job should execute**
  
