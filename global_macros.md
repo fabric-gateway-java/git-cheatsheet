@@ -134,6 +134,13 @@
       
 ## Publishers:
 
+**log-artifacts**
+
+  - This macro is used to collects the log files with extension .log and keep it in the WORKSPACE directory. Also, this macro won't fail the build if .log files are missing in the build.
+  
+        publishers:
+          - log-artifacts
+
 **archive-artifacts**
  
   - This macro is to publish the artifacts provided in the <artifacts> on the jenkins console.
@@ -143,6 +150,20 @@
               artifacts: '.tox/**/*.log'
               
     The above macro archives the `.log` files and display on the jenkins console.
+    
+**code-coverage-report**
+
+  - This macro is used to read the report-file and publish the cobuertura code coverage report on the Jenkins job console. The threshold limit is hard coded in this macro. Please refer the macro for more details on the threshold limit.
+  
+         publishers:
+           - code-coverage-report
+           
+**test-logs**
+
+  - This macro is used to collects the artifacts `**/*.csv, **/*.log, **/*.xml` and archive on the jenkins Last Successful Artifacts section.
+  
+         publishers:
+           - test-logs
      
 **fabric-email-notification**
   
@@ -158,4 +179,46 @@
       
       email-ids: Provide the email-ids list here to send the email notification to.
       output_format: provide the log file type
+ 
+ ## Builder
+ 
+**provide-maven-settings**
+
+  - This macro is used to provide the configuration files.
+  
+        builders:
+          - provide-maven-settings:
+              global-settings-file: 'global-settings'
+              fabric-settings-file: '{mvn-settings}'
+  
+    **Required Parameters:**
+
+      mvn-settings: provide the value to this variable. Each project has it's own maven-settings file. See example here 
+      `mvn-settings: 'fabric-ca-settings'` if it fabric, pass `fabric-settings` to maven-settings variable.
       
+**docker-login** (Dependent on provide-maven-settings macro)
+ 
+  - This macro is used to perform docker login with nexus credentials to publish images to nexus3.
+  
+**golang-environment-x86_64**
+
+  - This macro is used to set gopath and goroot for any go related projects on x86_64 build nodes. This macro reads the GO_VER value from the ci.properties files listed in fabric, fabric-ca repository and provide the same to the `properties-content`.
+  
+        builders:
+          - 'golang-environment-{arch}'
+          
+    Same applicable to any arch (s390x or ppc64le)
+ 
+**output-environment**
+
+  - Display the details of the Jenkins build environment on the Jenkins console
+  
+        builders:
+          - output-environment
+          
+**clean-environment**
+
+  - This macro is used to clean the environment includes deleting containers, images (ignoring specific images and tags) and all the left over build artifacts before start the build.
+  
+        builders: 
+          - clean-environment
