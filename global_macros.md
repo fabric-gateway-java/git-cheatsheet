@@ -1,6 +1,6 @@
 # Global Macros
 
-The purpose of writing global macros is use across the repository and reduce redundant code. These macros are easy to manage.
+The purpose of writing global macros is use across the repositories and reduce the redundant code. These macros are easy to manage.
 
 ## SCM 
 
