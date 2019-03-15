@@ -58,12 +58,12 @@ All the above tests run on Hyperledger infarstructure x86_64 build nodes. All th
 
 #### CI Process Flow
 
-As we trigger `fabric-ca-verify-x86_64` pipeline job for every gerrit patchset, we execute the tests in the below order
+As we trigger `fabric-ca-verify-x86_64` pipeline job for every gerrit patchset, we execute the tests in the below order.
 
 CleanEnvironment -- OutputEnvironment -- CloneRefSpec -- BasicChecks -- DocsBuild - Tests (Unit Test , FVT Tests) [VERIFY FLOW]
-                                                                                                (parallel)
+
 CleanEnvironment -- OutputEnvironment -- CloneRefSpec -- BasicChecks -- DocsBuild - Tests (E2E, Unit, FVT Tests) [Merge FLOW]
-                                                                                                (parallel)
+
 After the DocsBuild is passed, Jenkins Pipeline triggers Unit and FVT Tests parallel on two different nodes. After the tests are executed successfully it posts a Gerrit voting on the patchset.
 If DocsBuild fails, it send the result back to Gerrit patchset and it won't trigger the further builds.
 
