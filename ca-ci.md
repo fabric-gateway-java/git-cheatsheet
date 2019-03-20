@@ -31,7 +31,7 @@ Below steps shows what each does in the Jenkins pipeline verify and merge flow. 
 - We run `tox -edocs` from the root directory.
 - Displays the output in the form of HTML Publisher on the `fabric-ca-verify-x86_64` job. Click on **Docs Output** link on the build log.
 
-### _*Tests*_
+### **TESTS**
 
 #### Unit Tests
 
@@ -60,7 +60,7 @@ Below steps shows what each does in the Jenkins pipeline verify and merge flow. 
 
 - Look at the `Jenkinsfile` placed in the root directory of this project.
 
-### CI Process Flow
+### CI Pipeline flow
 
 As we trigger `fabric-ca-verify-x86_64` pipeline job for every gerrit patchset, we execute the tests in the below order.
 
