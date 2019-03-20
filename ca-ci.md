@@ -47,26 +47,26 @@ Below steps shows what each does in the Jenkins pipeline verify and merge flow. 
         - fabric-sdk-node - We run **gulp run-end-to-end** target which executes most of the end to end tests
         - fabric-sdk-java - We run **ci_run.sh** script pre-baked in fabric-sdk-java repository.
 
-### Supported platforms
+#### Supported platforms
 
 - x86_64 (Run the tests on verify and merge job)
 - s390x (Run the tests as part of daily job)
 
-### Build scripts
+#### Build scripts
 
 - We use global shared library to reduce the redundant code and maintain the common code in a ci-management repository. Please see the code updated here https://github.com/hyperledger/ci-management/tree/master/vars
 
 - Look at the `Jenkinsfile` placed in the root directory of this project.
 
-### CI Pipeline flow
+#### CI Pipeline flow
 
 As we trigger `fabric-ca-verify-x86_64` pipeline job for every gerrit patchset, we execute the tests in the below order.
 
 CleanEnvironment -- OutputEnvironment -- CloneRefSpec -- BasicChecks -- DocsBuild - Tests (Unit Test , FVT Tests)
-**[VERIFY FLOW]**
+**VERIFY FLOW**
 
 CleanEnvironment -- OutputEnvironment -- CloneRefSpec -- BasicChecks -- DocsBuild - Tests (E2E, Unit, FVT Tests)
-**[MERGE FLOW]**
+**MERGE FLOW**
 
 After the DocsBuild is passed, Jenkins Pipeline triggers Unit and FVT Tests parallel on two different nodes. After the tests are executed successfully it posts a Gerrit voting on the patchset.
 If DocsBuild fails, it send the result back to Gerrit patchset and it won't trigger the further builds.
