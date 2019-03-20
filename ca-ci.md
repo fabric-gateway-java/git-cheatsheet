@@ -2,9 +2,9 @@
 
 This document explains the fabric-ca Jenkins pipeline flow and FAQ's on the build process to help developer to get more femilarize with the process flow.
 
-To create CI jobs, we use JJB (Jenkins Job Builder) to create jobs in Jenkins. Please see the pipeline template job description here https://ci-docs.readthedocs.io/en/latest/source/pipeline_jobs.html#job-templates
+To manage CI jobs, we use JJB [JJB](https://docs.openstack.org/infra/jenkins-job-builder). Please see the pipeline job configuration template here https://ci-docs.readthedocs.io/en/latest/source/pipeline_jobs.html#job-templates.
 
-- Every Gerrit patchset triggers a verify job and run the below tests from `Jenkinsfile`
+- Every Gerrit patchset triggers a verify job and run the below tests from the `Jenkinsfile`
 
     - Basic Checks (make checks)
     - Documentation build (tox -edocs)
@@ -14,29 +14,30 @@ To create CI jobs, we use JJB (Jenkins Job Builder) to create jobs in Jenkins. P
 
 All the above tests run on the Hyperledger infarstructure x86_64 build nodes. All these nodes uses the packer with pre-configured software packages. This helps us to run the tests in much faster than installing required packages everytime.
 
-Below steps shows what each does in the Jenkins pipeline verify and merge flow. Every Gerrit patchset triggers the fabric-ca-verify-x86_64 job and runs the below tests on x86_64 platform. Before execute the below tests, it clean the environment (Delete the left over build artifiacts) and clone the repository with the Gerrit Refspec.
+Below steps shows what each stage does in the Jenkins pipeline verify and merge flow. Every Gerrit patchset triggers the fabric-ca-verify-x86_64 job and runs the below tests on x86_64 platform. Before execute the below tests, it clean the environment (Deletes the left over build artifiacts) and clone the repository with the Gerrit Refspec.
 
 ![](1.png)
 
 #### Basic Checks
 
 - We run `make checks` target to run the basic checks before kickoff the actual tests.
-- It's run against every Patchset. Patchset fails if any of the checks are faile
+- It's run against every Patchset.
 - You can run basic checks locally:
     - make checks (Runs all check conditions (license, format, imports, lint and vet)
 
 #### Docs Build
 
+- This stage gets triggered only when a patchset contains .md, .rst etc doc related file exetensions.
 - We run `tox -edocs` from the root directory.
-- Displays the output in the form of HTML Publisher on the `fabric-ca-verify-x86_64` job. Click on **Docs Output** link on the build log.
+- Displays the output in the form of HTML Publisher on the `fabric-ca-verify-x86_64` job. Click on **Docs Output** link on the Jenkins console.
 
 #### Unit Tests
 
-- We run `make unit-test` target to run the go based unit-tests
+- We run `make unit-test` target to run the go based unit-tests and publish the coverage report on the Jenkins console. Click on **Coverage Report** link on the Jenkins console.
 
 #### FVT Tests
 
-- We run `make fvt-tests` target to run the fvt tests. Which includes postgres, mysql related tests in it.
+- We run `make fvt-tests` target to fun fvt tests, which includes tests that perform end-to-end test scenarios with PosgreSQL and MySQL databases. These tests include database migration, backwards compatibility, and LDAP integration. https://github.com/hyperledger/fabric-ca/blob/master/scripts/fvt/README.md
 
 #### E2E tests
 
@@ -52,14 +53,17 @@ Below steps shows what each does in the Jenkins pipeline verify and merge flow. 
 
 #### CI Pipeline flow
 
-As we trigger `fabric-ca-verify-x86_64` pipeline job for every gerrit patchset, we execute the tests in the below order.
+As we trigger `fabric-ca-verify-x86_64` and `fabric-ca-merge-x86_64` pipeline jobs for every gerrit patchset, we execute the tests in the below order.
 
+**Verify Pipeline Flow**
+```
 CleanEnvironment -- OutputEnvironment -- CloneRefSpec -- BasicChecks -- DocsBuild - Tests (Unit Test , FVT Tests)
-**VERIFY FLOW**
 
+```
+**Merge Pipeline Flow**
+```
 CleanEnvironment -- OutputEnvironment -- CloneRefSpec -- BasicChecks -- DocsBuild - Tests (E2E, Unit, FVT Tests)
-**MERGE FLOW**
-
+```
 After the DocsBuild is passed, Jenkins Pipeline triggers Unit and FVT Tests parallel on two different nodes. After the tests are executed successfully it posts a Gerrit voting on the patchset.
 If DocsBuild fails, it send the result back to Gerrit patchset and it won't trigger the further builds.
 
