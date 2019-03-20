@@ -40,22 +40,15 @@ Below steps shows what each does in the Jenkins pipeline verify and merge flow. 
 
 #### E2E tests
 
-- We run **e2e tests** in the **merge job** and it performs the following tests.
-    - The intention of running e2e tests as part of the merge job is to test the dependent tests of fabric-ca. Execute below tests
+- We run **e2e tests** in the **merge job** and it performs the following tests. The intention of running e2e tests as part of the merge job is to test the dependent tests of fabric-ca.
         - fabcar
-        - fabric-sdk-node - We run **gulp run-end-to-end** target which executes most of the end to end tests
-        - fabric-sdk-java - We run **ci_run.sh** script pre-baked in fabric-sdk-java repository.
+        - fabric-sdk-node - We run **gulp run-end-to-end** target which executes most of the end to end tests of fabric-sdk-node which are depend on fabric-ca.
+        - fabric-sdk-java - We run **ci_run.sh** script which is pre-baked in fabric-sdk-java repository.
 
 #### Supported platforms
 
 - x86_64 (Run the tests on verify and merge job)
 - s390x (Run the tests as part of daily job)
-
-#### Build scripts
-
-- We use global shared library to reduce the redundant code and maintain the common code in a ci-management repository. Please see the code updated here https://github.com/hyperledger/ci-management/tree/master/vars
-
-- Look at the `Jenkinsfile` placed in the root directory of this project.
 
 #### CI Pipeline flow
 
