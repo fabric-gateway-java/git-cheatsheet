@@ -23,7 +23,6 @@ Below steps shows what each does in the Jenkins pipeline verify and merge flow. 
 - We run `make checks` target to run the basic checks before kickoff the actual tests.
 - It's run against every Patchset. Patchset fails if any of the checks are faile
 - You can run basic checks locally:
-
     - make checks (Runs all check conditions (license, format, imports, lint and vet)
 
 #### Docs Build
