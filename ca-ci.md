@@ -1,8 +1,8 @@
 # Continuous Integration Process
 
-This document explains the fabric-ca 
+This document explains the fabric-ca Jenkins pipeline flow and FAQ's on the build process to help developer to get more femilarize with the process flow.
 
-## Continuous Integration
+To create CI jobs, we use JJB (Jenkins Job Builder) to create jobs in Jenkins. Please see the pipeline template job description here https://ci-docs.readthedocs.io/en/latest/source/pipeline_jobs.html#job-templates
 
 - Every Gerrit patchset triggers a verify job and run the below tests from `Jenkinsfile`
     - Basic Checks (make checks)
@@ -16,7 +16,6 @@ All the above tests run on the Hyperledger infarstructure x86_64 build nodes. Al
 Below steps shows what each does in the Jenkins pipeline verify and merge flow. Every Gerrit patchset triggers the fabric-ca-verify-x86_64 job and runs the below tests on x86_64 platform. Before execute the below tests, it clean the environment (Delete the left over build artifiacts) and clone the repository with the Gerrit Refspec.
 
 ![](1.png)
-### Tests
 
 #### Basic Checks
 
@@ -30,6 +29,8 @@ Below steps shows what each does in the Jenkins pipeline verify and merge flow. 
 
 - We run `tox -edocs` from the root directory.
 - Displays the output in the form of HTML Publisher on the `fabric-ca-verify-x86_64` job. Click on **Docs Output** link on the build log.
+
+### Tests
 
 #### Unit Tests
 
@@ -111,6 +112,10 @@ On every merge failure, we send an build failure email notications to the submit
 ### What steps I have to modify when I create a branch from master?
 
 As the Jenkinsfile is completely parametrzed, you no need to modify anything in the Jenkinsfile but you may endup modifying ci.properties file with the Base Versions, Baseimage versions etc... in the new branch.
+
+### How to reach out to CI team?
+
+Post your questions or feedback in #ci-pipeline or #fabric-ci Rocket Chat channels.
 
 ### Build Scripts
 
