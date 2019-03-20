@@ -4,6 +4,8 @@ This document explains the fabric-ca Jenkins pipeline flow and FAQ's on the buil
 
 To manage CI jobs, we use JJB [JJB](https://docs.openstack.org/infra/jenkins-job-builder). Please see the pipeline job configuration template here https://ci-docs.readthedocs.io/en/latest/source/pipeline_jobs.html#job-templates.
 
+## CI Pipeline flow
+
 - Every Gerrit patchset triggers a verify job and run the below tests from the `Jenkinsfile`
 
     - Basic Checks (make checks)
@@ -51,27 +53,24 @@ Below steps shows what each stage does in the Jenkins pipeline verify and merge 
 - x86_64 (Run the tests on verify and merge job)
 - s390x (Run the tests as part of daily job)
 
-#### CI Pipeline flow
-
 As we trigger `fabric-ca-verify-x86_64` and `fabric-ca-merge-x86_64` pipeline jobs for every gerrit patchset, we execute the tests in the below order.
 
-**Verify Pipeline Flow**
-```
-CleanEnvironment -- OutputEnvironment -- CloneRefSpec -- BasicChecks -- DocsBuild - Tests (Unit Test , FVT Tests)
-
-```
-**Merge Pipeline Flow**
-```
-CleanEnvironment -- OutputEnvironment -- CloneRefSpec -- BasicChecks -- DocsBuild - Tests (E2E, Unit, FVT Tests)
-```
 After the DocsBuild is passed, Jenkins Pipeline triggers Unit and FVT Tests parallel on two different nodes. After the tests are executed successfully it posts a Gerrit voting on the patchset.
 If DocsBuild fails, it send the result back to Gerrit patchset and it won't trigger the further builds.
 
 See below **FAQ's** to contribute to CI changes.
 
+## FAQ's
+
 #### What happens on the merge job?
 
 After the patchset got merged in the fabric-ca repository, it follows the above pipeline flow and executes the e2e tests in parallel to the Unit and FVT Tests.
+
+**Merge Pipeline Flow**
+
+```
+CleanEnvironment -- OutputEnvironment -- CloneRefSpec -- BasicChecks -- DocsBuild - Tests (E2E, Unit, FVT Tests)
+```
 
 Jenkins clones the latest merged commit and runs the below steps
 
@@ -108,11 +107,7 @@ On every merge failure, we send an build failure email notications to the submit
 
 As the Jenkinsfile is completely parametrzed, you no need to modify anything in the Jenkinsfile but you may endup modifying ci.properties file with the Base Versions, Baseimage versions etc... in the new branch.
 
-#### How to reach out to CI team?
-
-Post your questions or feedback in #ci-pipeline or #fabric-ci Rocket Chat channels.
-
-#### Build Scripts
+#### Where can I see the Build Scripts.
 
 We use global shared library scripts and Jenkinsfile along with the build file.
 
@@ -125,3 +120,7 @@ ci.properties         - https://github.com/hyperledger/fabric-ca/tree/master/ci.
 
 Packer Scripts        - https://github.com/hyperledger/ci-management/blob/master/packer/provision/docker.sh
 (Packer is a tool for automatically creating VM and container images, configuring them and post-processing them into standard output formats. We build Hyperledger's CI images via Packer and attach them to x86_64 build nodes. On s390x, we install manually. See the packages we install as a pre-requisite in the CI x86 build nodes.)
+
+#### How to reach out to CI team?
+
+Post your questions or feedback in #ci-pipeline or #fabric-ci Rocket Chat channels.
