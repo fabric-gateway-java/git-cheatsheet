@@ -73,7 +73,7 @@ If DocsBuild fails, it send the result back to Gerrit patchset and it won't trig
 
 See below **FAQ's** to contribute to CI changes.
 
-### What happens on the merge job?
+#### What happens on the merge job?
 
 After the patchset got merged in the fabric-ca repository, it follows the above pipeline flow and executes the e2e tests in parallel to the Unit and FVT Tests.
 
@@ -86,37 +86,37 @@ Jenkins clones the latest merged commit and runs the below steps
   - fabric-sdk-node (npm install, gulp run-end-to-end)
   - fabric-sdk-java (Run ci_run.sh)
 
-### What happens if one of the build stage fails?
+#### What happens if one of the build stage fails?
 
 As we are running these tests in `fastFailure: true` (if any build stage fails in the parallel process, it will terminate/abort the current running tests and sends the result back to the Gerrit Patchset. This way, CI will avoid runnning tests when there is a failure in one of the parallel build stage.
 
 It shows `aborted` on the aborted stage on pipeline staged view.
 
-### How to re-trigger failed tests?
+#### How to re-trigger failed tests?
 
 With this pipeline flow, you can not re-trigger specific failed job, instead you can post comments `reverify` or `reverify-x` on the gerrit patchset to trigger the `fabric-ca-verify-x86_64` job which triggers pipeline flow as mentioned above. Also, we provided `remerge` or `remerge-x` comment phrases to re-trigger the failed merge jobs.
 
-### Where to see the output of the stages?
+#### Where to see the output of the stages?
 
 Piepline supports two views (stages and blueocean). Staged views shows on the Jenkins job main page and it shows each stage in order and the status. For better view, we suggest you to access BlueOcean plugin. Click on the JOB Number and click on the **Open Blue Ocean** link that shows the build stages in pipeline view.
 
-### How to add more stages to this pipeline flow?
+#### How to add more stages to this pipeline flow?
 
 We use scripted pipeline syntax with groovy and shell scripts. Also, we use global shared library scripts which are placed in https://github.com/hyperledger/ci-management/tree/master/vars. Try to leverage these common functions in your code. All you have to do is, undestand the pipeline flow of the tests, add more stages as mentioned in the existing Jenkinsfile.
 
-### How will I get build failure notifications.
+#### How will I get build failure notifications.
 
 On every merge failure, we send an build failure email notications to the submitter of the patchset and send build details to the Rocket Chat **jenkins-robot** channel. Check this here https://chat.hyperledger.org/channel/jenkins-robot
 
-### What steps I have to modify when I create a branch from master?
+#### What steps I have to modify when I create a branch from master?
 
 As the Jenkinsfile is completely parametrzed, you no need to modify anything in the Jenkinsfile but you may endup modifying ci.properties file with the Base Versions, Baseimage versions etc... in the new branch.
 
-### How to reach out to CI team?
+#### How to reach out to CI team?
 
 Post your questions or feedback in #ci-pipeline or #fabric-ci Rocket Chat channels.
 
-### Build Scripts
+#### Build Scripts
 
 We use global shared library scripts and Jenkinsfile along with the build file.
 
