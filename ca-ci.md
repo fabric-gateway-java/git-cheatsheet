@@ -16,7 +16,6 @@ All the above tests run on the Hyperledger infarstructure x86_64 build nodes. Al
 Below steps shows what each does in the Jenkins pipeline verify and merge flow. Every Gerrit patchset triggers the fabric-ca-verify-x86_64 job and runs the below tests on x86_64 platform. Before execute the below tests, it clean the environment (Delete the left over build artifiacts) and clone the repository with the Gerrit Refspec.
 
 ![](1.png)
-
 ### Tests
 
 #### Basic Checks
