@@ -123,4 +123,4 @@ Packer Scripts        - https://github.com/hyperledger/ci-management/blob/master
 
 #### How to reach out to CI team?
 
-Post your questions or feedback in #ci-pipeline or #fabric-ci Rocket Chat channels.
+Post your questions or feedback in https://chat.hyperledger.org/channel/ci-pipeline or https://chat.hyperledger.org/channel/fabric-ci Rocket Chat channels.
