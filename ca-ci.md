@@ -2,7 +2,7 @@
 
 This document explains the fabric-ca Jenkins pipeline flow and FAQ's on the build process to help developer to get more femilarize with the process flow.
 
-To manage CI jobs, we use JJB [JJB](https://docs.openstack.org/infra/jenkins-job-builder). Please see the pipeline job configuration template here https://ci-docs.readthedocs.io/en/latest/source/pipeline_jobs.html#job-templates.
+To manage CI jobs, we use [JJB](https://docs.openstack.org/infra/jenkins-job-builder). Please see the pipeline job configuration template here https://ci-docs.readthedocs.io/en/latest/source/pipeline_jobs.html#job-templates.
 
 ## CI Pipeline flow
 
