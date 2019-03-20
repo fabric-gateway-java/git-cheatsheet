@@ -48,11 +48,6 @@ Below steps shows what each stage does in the Jenkins pipeline verify and merge 
         - fabric-sdk-node - We run **gulp run-end-to-end** target which executes most of the end to end tests of fabric-sdk-node which are depend on fabric-ca.
         - fabric-sdk-java - We run **ci_run.sh** script which is pre-baked in fabric-sdk-java repository.
 
-#### Supported platforms
-
-- x86_64 (Run the tests on verify and merge job)
-- s390x (Run the tests as part of daily job)
-
 As we trigger `fabric-ca-verify-x86_64` and `fabric-ca-merge-x86_64` pipeline jobs for every gerrit patchset, we execute the tests in the below order.
 
 After the DocsBuild is passed, Jenkins Pipeline triggers Unit and FVT Tests parallel on two different nodes. After the tests are executed successfully it posts a Gerrit voting on the patchset.
@@ -106,6 +101,11 @@ On every merge failure, we send an build failure email notications to the submit
 #### What steps I have to modify when I create a branch from master?
 
 As the Jenkinsfile is completely parametrzed, you no need to modify anything in the Jenkinsfile but you may endup modifying ci.properties file with the Base Versions, Baseimage versions etc... in the new branch.
+
+#### What are the supported platforms
+
+- x86_64 (Run the tests on verify and merge job)
+- s390x (Run the tests as part of daily job)
 
 #### Where can I see the Build Scripts.
 
