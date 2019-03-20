@@ -31,8 +31,6 @@ Below steps shows what each does in the Jenkins pipeline verify and merge flow. 
 - We run `tox -edocs` from the root directory.
 - Displays the output in the form of HTML Publisher on the `fabric-ca-verify-x86_64` job. Click on **Docs Output** link on the build log.
 
-### **TESTS**
-
 #### Unit Tests
 
 - We run `make unit-test` target to run the go based unit-tests
