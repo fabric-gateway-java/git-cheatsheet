@@ -5,6 +5,7 @@ This document explains the fabric-ca Jenkins pipeline flow and FAQ's on the buil
 To create CI jobs, we use JJB (Jenkins Job Builder) to create jobs in Jenkins. Please see the pipeline template job description here https://ci-docs.readthedocs.io/en/latest/source/pipeline_jobs.html#job-templates
 
 - Every Gerrit patchset triggers a verify job and run the below tests from `Jenkinsfile`
+
     - Basic Checks (make checks)
     - Documentation build (tox -edocs)
     - Unit tests (make unit-tests)
@@ -30,7 +31,7 @@ Below steps shows what each does in the Jenkins pipeline verify and merge flow. 
 - We run `tox -edocs` from the root directory.
 - Displays the output in the form of HTML Publisher on the `fabric-ca-verify-x86_64` job. Click on **Docs Output** link on the build log.
 
-### Tests
+### _*Tests*_
 
 #### Unit Tests
 
