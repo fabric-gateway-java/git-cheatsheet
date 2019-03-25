@@ -44,18 +44,19 @@ and the below is the series of stages for the merge job flow. (`fabric-sdk-node-
 
  **Merge FLOW**
 
-    CleanEnvironment -- OutputEnvironment -- CloneRefSpec -- Headless Tests -- Integration Tests -- Cucumber & Logger Tests -- Publish NPM modules -- Publish API Docs
+    CleanEnvironment -- OutputEnvironment -- CloneRefSpec -- Headless Tests -- Integration Tests
+    -- Cucumber & Logger Tests -- Publish NPM modules -- Publish API Docs
 
 - After cleanEnvironment and Display the environment details on the Jenkins console, CI scripts
   fetches the Gerrit refspec and try to execute **Headless and Integration Tests**. `docker-ready`
   is a gulp sub target which will try to pull release-1.4 latest stable images from Hyperledger DockerHub.
   Once the tests are executed successfully, the condition checks whether it is a verify or merge.
-  If it is a merge job, Jenkins triggers the **publish npm modules** and **api docs** stages and
+  If it is a merge job, Jenkins triggers the **Publish npm modules** and **API Docs** stages and
   publishes the npm modules and api docs to gh-pages.
 
   Note: Script provides an option to build the images on the latest fabric commit and run sdk-node
-  tests. For this you have to modify **IMAGE_SOURCE** to "build" in the ci.properties file.
-  If you would like to pull images from nexus change **IMAGE_SOURCE** to "nexus". Though we pull
+  tests. For this you have to modify **IMAGE_SOURCE** to **build** in the ci.properties file.
+  If you would like to pull images from nexus change **IMAGE_SOURCE** to **nexus**. Though we pull
   the images from nexus with this change, in release branches sdk gulp file pulls the images from
   dockerhub. So till we change the build process in the gulp file, let's pull these images from
   docker hub.
@@ -65,7 +66,7 @@ and the below is the series of stages for the merge job flow. (`fabric-sdk-node-
 - API docs can be accessible from https://fabric-sdk-node.github.io/release-1.4/index.html
 
 - Jenkins sends build notifications only on the merge failure job. Jenkins sends build notifications
-  to RocketChat `jenkins-robot` channel and an email to the owner of the patchset. If you would like
+  to RocketChat **`jenkins-robot`** channel and an email to the owner of the patchset. If you would like
   to send build notifications to someother channel, simply change the channel name in the ci.properties file.
 
 See below **FAQ's** to contribute to CI changes.
